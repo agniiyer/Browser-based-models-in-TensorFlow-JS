@@ -1,0 +1,26 @@
+<!--Remember the body is in HTML but the script is in JavaScript. Therefore the comments have a different syntax-->
+
+<html>
+<head>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"> </script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"> </script> 
+</head>
+<body>
+<!--    embed (display) image on webpage-->
+    <img id="img" src="coffee.jpg"></img>
+<!--    use a large font, set div hieght to 300-->
+    <div id="output" style="font-family:courier;font-size:24px;height=300px"></div>
+</body>
+<script> // put script below body because we want img and div to be loaded before the script executes
+    const img = document.getElementById('img');
+    const outp = document.getElementById('output');
+    mobilenet.load().then(model => {
+        model.classify(img).then(predictions => { // all the operations for turning the image into tensors is done by the model
+            console.log(predictions);
+            for(var i = 0; i<predictions.length; i++){
+                outp.innerHTML += "<br/>" + predictions[i].className + " : " + predictions[i].probability;
+            }
+        });
+    });
+</script>
+</html>

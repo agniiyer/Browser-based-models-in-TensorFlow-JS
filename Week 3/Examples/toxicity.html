@@ -1,0 +1,23 @@
+<html>
+<head>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity"></script>
+<script>
+const threshold = 0.9;
+toxicity.load(threshold).then(model => {
+    const sentences = ['you suck'];
+    model.classify(sentences).then(predictions => {
+        console.log(predictions);
+        for(i=0; i<7; i++){
+            if(predictions[i].results[0].match){ // if match is true or false for that particular toxic trait
+                console.log(predictions[i].label + // print the label of the trait
+                            " was found with probability of " + 
+                            predictions[i].results[0].probabilities[1]); // print the probability of the trait               
+            }  
+        }
+    });
+});
+</script> 
+</head>
+<body></body>
+</html>    
